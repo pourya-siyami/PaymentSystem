@@ -10,14 +10,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionFileVo {
+
     private String debtorAccountNum;
     private String creditorAccountNum;
     private int amount;
+
+    public String getDebtorAccountNum() {
+        return debtorAccountNum;
+    }
+
+    public void setDebtorAccountNum(String debtorAccountNum) {
+        this.debtorAccountNum = debtorAccountNum;
+    }
+
+    public String getCreditorAccountNum() {
+        return creditorAccountNum;
+    }
+
+    public void setCreditorAccountNum(String creditorAccountNum) {
+        this.creditorAccountNum = creditorAccountNum;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     static Path transactionFilePath = Paths.get("./TransactionFile.txt"); //initialize File object
     String line = null;
-
-    public TransactionFileVo() {
-    }
 
     public TransactionFileVo(String debtorAccountNum, String creditorAccountNum, int amount) {
         this.debtorAccountNum = debtorAccountNum;
@@ -56,10 +79,5 @@ public class TransactionFileVo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        TransactionFileVo transactionFileVo = new TransactionFileVo();
-        transactionFileVo.setFileToVo();
     }
 }

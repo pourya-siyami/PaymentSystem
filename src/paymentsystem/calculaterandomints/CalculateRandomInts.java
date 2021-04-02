@@ -22,7 +22,7 @@ public class CalculateRandomInts {
     static Random rand = new Random();
     static int paymentFileBalance = rand.nextInt(501) + 10000;
     static int paymentBalanceSaver = paymentFileBalance;
-    String deptor = "\t1.10.100.1\t" + paymentFileBalance + newLine;
+    String deptor = "1.10.100.1\t" + paymentFileBalance + newLine;
 
     static CalculateRandomInts calculateRandomInts = new CalculateRandomInts();
 

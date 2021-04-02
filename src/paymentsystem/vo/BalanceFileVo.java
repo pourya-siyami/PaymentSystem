@@ -10,21 +10,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BalanceFileVo {
-    private String debtorAccountBalance;
-    String strLine = "";
-    String str_data = "";
-    static Path balanceFilePath = Paths.get("./BalanceFile.txt"); //initialize File object
 
-    public BalanceFileVo() {
+    private String AccountNum;
+    private int AccountBalance;
+
+    public String getAccountNum() {
+        return AccountNum;
     }
 
-    public BalanceFileVo(String debtorAccountBalance) {
-        this.debtorAccountBalance = debtorAccountBalance;
+    public void setAccountNum(String accountNum) {
+        AccountNum = accountNum;
+    }
+
+    public int getAccountBalance() {
+        return AccountBalance;
+    }
+
+    public void setAccountBalance(int accountBalance) {
+        AccountBalance = accountBalance;
+    }
+
+    static Path balanceFilePath = Paths.get("./BalanceFile.txt"); //initialize File object
+    String line = null;
+
+    public BalanceFileVo(String AccountNum, int AccountBalance) {
+        this.AccountNum = AccountNum;
+        this.AccountBalance = AccountBalance;
     }
 
     @Override
     public String toString() {
-        return "BalanceFileVo: {" + "debtorAccountBalance= " + debtorAccountBalance + '}';
+        return "BalanceFileVo: {" + "AccountNumber= " + AccountNum + " : " + "AccountBalance= "
+                + AccountBalance + '}';
     }
 
     void setFileToVo() {
@@ -32,23 +49,23 @@ public class BalanceFileVo {
             List<BalanceFileVo> list = new ArrayList<>();
             BufferedReader br = Files.newBufferedReader(balanceFilePath, StandardCharsets.UTF_8);
 
-            while (strLine != null) {
-                str_data += strLine;
-                strLine = br.readLine();
+            while ((line = br.readLine()) != null) {
+                try {
+                    String[] parameters = line.split("\t");
+                    if (parameters.length == 2) {
+                        String debtorAccountNum = parameters[0];
+                        Integer debtorAccountBalance = Integer.parseInt(parameters[1]);
+                        BalanceFileVo balanceFileVo = new BalanceFileVo(debtorAccountNum, debtorAccountBalance);
+                        list.add(balanceFileVo);
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
-            debtorAccountBalance = str_data.substring(11, 14);
-            BalanceFileVo balanceFileVo = new BalanceFileVo(debtorAccountBalance);
-            list.add(balanceFileVo);
-            System.out.println("Object created from the file");
             list.stream().forEach(System.out::println);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        BalanceFileVo balanceFileVo = new BalanceFileVo();
-        balanceFileVo.setFileToVo();
     }
 }
