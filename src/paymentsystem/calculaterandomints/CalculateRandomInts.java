@@ -32,7 +32,7 @@ public class CalculateRandomInts {
 
     String deptorAccountNum = "1.10.100.1";
 
-    public void readFileMojoodiBalance() {
+    public synchronized void readFileMojoodiBalance() {
         BasicConfigurator.configure();
         String message;
         try {
@@ -58,7 +58,7 @@ public class CalculateRandomInts {
         }
     }
 
-    public void writeToFiles() {
+    public synchronized void writeToFiles() {
         BasicConfigurator.configure();
         String message;
         try {
