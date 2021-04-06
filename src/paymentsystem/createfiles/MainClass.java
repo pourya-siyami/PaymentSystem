@@ -1,13 +1,19 @@
 package paymentsystem.createfiles;
 
-import runner.Runnable;
+
+import runner.Runner;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainClass {
 
     public static void main(String[] args) {
-        Thread th1 = new Thread(new Runnable());
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
         BalanceFile balanceFile = new BalanceFile();
         balanceFile.generateMojoodi();
-        th1.start();
+        Runnable runner = new Runner();
+        executorService.execute(runner);
+        executorService.shutdown();
     }
 }
