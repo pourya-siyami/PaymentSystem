@@ -18,16 +18,15 @@ public class CalculateRandomInts {
     private final Logger logger = Logger.getLogger(this.getClass());
     String strLine = "";
     String str_data = "";
-    static int mojoodiFileBalance = 0;
+    public static int mojoodiFileBalance = 0;
     static Random rand = new Random();
     static int paymentFileBalance = rand.nextInt(501) + 10000;
-    static int paymentBalanceSaver = paymentFileBalance;
+    public static int paymentBalanceSaver = paymentFileBalance;
     String deptor = "1.10.100.1\t" + paymentFileBalance + newLine;
 
     static CalculateRandomInts calculateRandomInts = new CalculateRandomInts();
 
     static Path balanceFilePath = Paths.get("./BalanceFile.txt"); //initialize File object
-    static Path transactionFilePath = Paths.get("./TransactionFile.txt"); //initialize File object
     static Path paymentFilePath = Paths.get("./PaymentFile.txt"); //initialize File object
 
     String deptorAccountNum = "1.10.100.1";
@@ -93,19 +92,16 @@ public class CalculateRandomInts {
         try {
             BufferedWriter paymentFileWriter = Files.newBufferedWriter(paymentFilePath, StandardCharsets.UTF_8);
             BufferedWriter balanceFileWriter = Files.newBufferedWriter(balanceFilePath, StandardCharsets.UTF_8);
-            BufferedWriter transactionFileWriter = Files.newBufferedWriter(transactionFilePath, StandardCharsets.UTF_8);
+
             balanceFileWriter.write("1.10.100.1" + "\t" + (mojoodiFileBalance - paymentBalanceSaver) + newLine);
             paymentFileWriter.write("deptor\t" + deptor);
             logger.info("Done");
             for (int i : container) {
-                balanceFileWriter.write("1.20.100." + value + "\t" + i + newLine);
                 paymentFileWriter.write("creditor" + "\t" + "1.20.100." + value + "\t" + i + newLine);
-                transactionFileWriter.write("1.10.100." + value + "\t" + "1.20.100." + value + "\t" + i + newLine);
                 value += 1;
             }
             balanceFileWriter.close();
             paymentFileWriter.close();
-            transactionFileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
